@@ -1,10 +1,9 @@
 FROM node:16
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json /app
 RUN npm install
 
-COPY . .
+COPY . /app
 
-CMD [ "node", "src/index.js" ]
-
+CMD [ "node", "/app/src/index.js" ]

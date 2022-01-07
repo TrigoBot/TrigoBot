@@ -18,7 +18,8 @@ module.exports = (client) => {
                 const command = require(`../commands/${folder}/${file}`);
                 // Set a new item in the Collection
                 // With the key as the command name and the value as the exported module
-                client.commands.set(command.data.name, command);
+                client.commands.set(command.data.name, command, );
+                console.log('stage 1')
                 client.commandArray.push(command.data.toJSON());
             }
         }

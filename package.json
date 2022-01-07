@@ -19,10 +19,19 @@
   "homepage": "https://github.com/Jelyko/Try-Me-Music#readme",
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
+    "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.2.0-canary.0",
+    "@discordjs/voice": "^0.7.5",
+    "@distube/soundcloud": "^1.0.0",
+    "@distube/spotify": "^1.0.0",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.0",
+    "distube": "^3.0.5",
     "dotenv": "^10.0.0",
-    "fs": "^0.0.1-security"
+    "ffmpeg-static": "^4.4.1",
+    "fs": "^0.0.1-security",
+    "libsodium-wrappers": "^0.7.9",
+    "python": "^0.0.4",
+    "ytdl-core": "^4.9.2"
   }
 }
