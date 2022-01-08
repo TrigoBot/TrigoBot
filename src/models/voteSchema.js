@@ -5,6 +5,7 @@ const voteSchema = new mongoose.Schema({
     guildId: { type: String },
     lastEdited: Date,
     votes: { type: Array },
+    jump: { type: Array },
 })
 
 module.exports = new mongoose.model('Vote', voteSchema, 'votes')

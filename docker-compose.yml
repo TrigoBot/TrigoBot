@@ -2,4 +2,4 @@ version: "3.8"
 services:
   bot:
     build: .
-    image: 192.168.178.5:5000/try-me-music:v0.5
+    image: 192.168.178.5:5000/try-me-music:v0.5.2
