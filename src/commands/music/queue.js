@@ -1,29 +1,35 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const {
+    SlashCommandBuilder,
+    Embed
+} = require('@discordjs/builders');
+const {
+    MessageEmbed,
+    MessageActionRow,
+    MessageButton
+} = require('discord.js');
+const paginationEmbed = require('discordjs-button-pagination');
+const generateQueueEmbed = require('../../ExFunctions/generateQueueEmbed');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('queue')
-		.setDescription('Display the queue')
-        .addStringOption(option =>
-            option.setName('page')
-                .setDescription('page 1-99')
-                .setRequired(true)),
-	async execute(interaction, client) {
-		let args = interaction.options.get("name")
+    data: new SlashCommandBuilder()
+        .setName('queue')
+        .setDescription('Display the queue'),
+    async execute(interaction, client) {
+        const queue = client.distube.getQueue(interaction.guildId)
 
-        if (!interaction.member.voice.channel) return interaction.reply({ content: `You must be in a voice channel`, ephemeral: true })
-        if (interaction.guild.me.voice.channel && interaction.member.voice.channel.id !== interaction.guild.me.voice.channel.id) return interaction.reply({ content: `You must be in the same voice channel as me`, ephemeral: true })
+        const embeds = generateQueueEmbed(queue.songs)
 
-        interaction.client.distube.playVoiceChannel(
-            interaction.member.voice.channel,
-            args.value,
-            {
-                textChannel: interaction.channel,
-                member: interaction.member,
-            }
-        );
-        
-		await interaction.reply(`🎵 Added ${args.value} to the queue 🎵`);
-	},
+        const button1 = new MessageButton()
+            .setCustomId('previousbtn')
+            .setLabel('Previous')
+            .setStyle('DANGER');
+        const button2 = new MessageButton()
+            .setCustomId('nextbtn')
+            .setLabel('Next')
+            .setStyle("SUCCESS");
+        const buttonList = [ button1, button2 ];
+
+        paginationEmbed(interaction, embeds, buttonList, 10000);
+        //await interaction.reply({ content: `Current Page: ${currentPage+1}/${embeds.length}`, embeds: [embeds[currentPage]], components: [row] })
+    },
 };
