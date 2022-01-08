@@ -28,7 +28,7 @@ module.exports = (client) => {
 
         (async () => {
             try {
-                console.log('Started refreshing application (/) commands.');
+                console.log('\x1b[32m%s\x1b[0m', 'Started refreshing application (/) commands.');
 
                 await rest.put(
                     Routes.applicationGuildCommands(clientId, guildId), {
@@ -36,9 +36,9 @@ module.exports = (client) => {
                     },
                 );
 
-                console.log('Successfully reloaded application (/) commands.');
+                console.log('\x1b[32m%s\x1b[0m', 'Successfully reloaded application (/) commands.');
             } catch (error) {
-                console.error(error);
+                console.error('\x1b[31m%s\x1b[0m', error);
             }
         })();
     }

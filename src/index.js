@@ -31,10 +31,12 @@ const commandFolders = fs.readdirSync("./src/commands");
         require(`./functions/${file}`)(client);
     }
     client.handleEvents(eventFiles, "./src/events");
+    console.log('\x1b[35m%s\x1b[0m', 'Loaded events')
     client.handleCommands(commandFolders, "./src/commands")
     client.handleMusic(client)
-
+    console.log('\x1b[35m%s\x1b[0m', 'Loaded Distube')
     client.login(process.env.TOKEN);
 
     client.dbLogin();
+
 })();
