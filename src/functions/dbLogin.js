@@ -16,7 +16,7 @@ module.exports = (client => {
         await mongoose.connect(process.env.dbToken, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-            dbName: 'try-me-music',
+            dbName: process.env.DBNAME,
         });
     };
 })
