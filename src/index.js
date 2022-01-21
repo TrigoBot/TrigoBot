@@ -5,7 +5,7 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const fs = require('fs');
 require('dotenv').config();
 
-const intents = new Intents(641);
+const intents = new Intents(14023);
 const client = new Client({ intents });
 
 const distube = new DisTube.default(client, {
@@ -21,6 +21,8 @@ const distube = new DisTube.default(client, {
 client.distube = distube
 
 client.commands = new Collection();
+
+require("./systems/GiveawaySys")(client);
 
 const functions = fs.readdirSync("./src/functions").filter(file => file.endsWith(".js"));
 const eventFiles = fs.readdirSync("./src/events").filter(file => file.endsWith(".js"));

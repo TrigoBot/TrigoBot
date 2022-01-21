@@ -15,7 +15,7 @@ module.exports = {
             option.setName('reason')
                 .setDescription('Why the member is being banned')
                 .setRequired(true))
-                .addStringOption(option =>
+        .addStringOption(option =>
             option.setName('messages')
                 .setDescription('delete messages?')
                 .setRequired(true)
