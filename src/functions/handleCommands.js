@@ -8,6 +8,7 @@ const fs = require('fs');
 
 const clientId = process.env.ID;
 const guildId = process.env.GUILD;
+const production = process.env.PRODUCTION
 
 module.exports = (client) => {
     client.handleCommands = async (commandFolders, path) => {
@@ -28,8 +29,7 @@ module.exports = (client) => {
 
         (async () => {
             try {
-                
-                if (!guildId) {
+                if (production == "YES") {
                     console.log('\x1b[32m%s\x1b[0m', 'Global Started refreshing application (/) commands.');
                     await rest.put(
                         Routes.applicationCommands(clientId), {
