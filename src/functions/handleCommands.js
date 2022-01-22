@@ -28,13 +28,22 @@ module.exports = (client) => {
 
         (async () => {
             try {
-                console.log('\x1b[32m%s\x1b[0m', 'Started refreshing application (/) commands.');
-
-                await rest.put(
-                    Routes.applicationGuildCommands(clientId, guildId), {
-                        body: client.commandArray
-                    },
-                );
+                
+                if (!guildId) {
+                    console.log('\x1b[32m%s\x1b[0m', 'Global Started refreshing application (/) commands.');
+                    await rest.put(
+                        Routes.applicationCommands(clientId), {
+                            body: client.commandArray
+                        }
+                    )
+                } else {
+                    console.log('\x1b[32m%s\x1b[0m', 'Local Started refreshing application (/) commands.');
+                    await rest.put(
+                        Routes.applicationGuildCommands(clientId, guildId), {
+                            body: client.commandArray
+                        },
+                    );
+                }
 
                 console.log('\x1b[32m%s\x1b[0m', 'Successfully reloaded application (/) commands.');
             } catch (error) {
