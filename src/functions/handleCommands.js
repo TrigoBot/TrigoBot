@@ -35,7 +35,7 @@ module.exports = (client) => {
                         Routes.applicationCommands(clientId), {
                             body: client.commandArray
                         }
-                    )
+                    )  
                 } else {
                     console.log('\x1b[32m%s\x1b[0m', 'Local Started refreshing application (/) commands.');
                     await rest.put(
@@ -44,7 +44,6 @@ module.exports = (client) => {
                         },
                     );
                 }
-
                 console.log('\x1b[32m%s\x1b[0m', 'Successfully reloaded application (/) commands.');
             } catch (error) {
                 console.error('\x1b[31m%s\x1b[0m', error);
