@@ -26,7 +26,7 @@ module.exports = {
      */
 
 
-        async execute(interaction){
+        async execute(interaction, client){
             const { options, guildId, member, user } = interaction;
             const Type = options.getString("type");
             const Suggestion = options.getString("suggestion");
@@ -41,6 +41,15 @@ module.exports = {
                 {name:"Status:", value: "Pending", inline: true}
             )
             .setTimestamp()
+
+            const cEmbed = new MessageEmbed()
+			.setColor('NAVY')
+            .setAuthor({ name: user.tag, iconURL: pfp })
+			.addFields(
+                {name: "Suggestion:", value: Suggestion, inline: false},
+                {name:"Type:", value: Type, inline: true },
+            )
+            .setTimestamp()
             
             const Buttons = new MessageActionRow();
             Buttons.addComponents(
@@ -50,11 +59,17 @@ module.exports = {
 
             try{
 
-                const M = await interaction.reply({embeds: [Embed], components: [Buttons], fetchReply: true});
+                const M = await interaction.reply({embeds: [cEmbed], fetchReply: true});
 
-                await DB.create({GuildID: guildId, MessageID:  M.id, Details: [
+                let suggestchannel = client.channels.cache.get(`935202950207397928`);
+                const N = await suggestchannel.send({
+                    embeds: [Embed],
+                    components: [Buttons],
+                })
+
+                await DB.create({GuildID: guildId, MessageID:  M.id, SuggestID: N.id, Details: [
                     {
-                        MemberID: member.id,
+                        MemberID: user.id,
                         Type: Type,
                         Suggestion: Suggestion
                     }

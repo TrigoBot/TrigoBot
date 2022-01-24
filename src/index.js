@@ -21,6 +21,7 @@ const distube = new DisTube.default(client, {
 client.distube = distube
 
 client.commands = new Collection();
+client.buttons = new Collection();
 
 require("./systems/GiveawaySys")(client);
 
@@ -35,6 +36,7 @@ const commandFolders = fs.readdirSync("./src/commands");
     client.handleEvents(eventFiles, "./src/events");
     console.log('\x1b[35m%s\x1b[0m', 'Loaded events')
     client.handleCommands(commandFolders, "./src/commands")
+    client.handleButtons();
     client.handleMusic(client)
     console.log('\x1b[35m%s\x1b[0m', 'Loaded Distube')
     client.login(process.env.TOKEN);
