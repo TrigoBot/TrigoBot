@@ -20,6 +20,9 @@ const distube = new DisTube.default(client, {
 });
 client.distube = distube
 
+const Levels = require("discord-xp");
+client.levels = Levels
+
 client.commands = new Collection();
 client.buttons = new Collection();
 

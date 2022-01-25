@@ -18,17 +18,22 @@ module.exports = (client => {
             useNewUrlParser: true,
             //dbName: process.env.DBNAME,
         }
+
+
         if (!process.env.DBURL) return console.log('\x1b[31m%s\x1b[0m', "Must specify DBURL in .env")
 
         if (!process.env.DBUSER) {
             await mongoose.connect("mongodb://"+process.env.DBURL, dbOptions);
+            client.levels.setURL("mongodb://"+process.env.DBURL)
         } else {
             if (!process.env.DBPASS) return console.log('\x1b[31m%s\x1b[0m', "Must specify DBPASS in .env")
             if (!process.env.DBAUTHSOURCE) {
                 let authSource = 'admin'
                 await mongoose.connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@${process.env.DBURL}?authSource=${authSource}`, dbOptions)
+                client.levels.setURL(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@${process.env.DBURL}?authSource=${authSource}`)
             } else {
                 await mongoose.connect(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@${process.env.DBURL}?authSource=${process.env.DBAUTHSOURCE}`, dbOptions)
+                client.levels.setURL(`mongodb://${process.env.DBUSER}:${process.env.DBPASS}@${process.env.DBURL}?authSource=${process.env.DBAUTHSOURCE}`)
             }            
         }
     };
