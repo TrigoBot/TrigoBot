@@ -10,7 +10,7 @@ module.exports = {
 			.setColor('BLUE')
 			.setTitle('About me:')
 			.addFields(
-				{ name: 'Development', value: `This bot is mainly developed by <@!405176812684181514> and simple commands are done by <@!521743464061468672>`},
+				{ name: 'Development', value: `This bot is being developed by <@!405176812684181514> and <@!521743464061468672>`},
                 { name: 'Code', value: `This bot is open-source, check it out https://github.com/TrigoBot/TrigoBot`},
         { name: 'Support', value: `For support, please join our discord server: https://discord.gg/hS9q2H8fkX`},
 			)
