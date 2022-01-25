@@ -3,5 +3,7 @@ const { model, Schema } = require("mongoose");
 module.exports = model("SuggestDB", new Schema({
     GuildID: String,
     MessageID: String,
-    Details: Array
+    SuggestID: String,
+    Details: Array,
+    Status: String,
 }));

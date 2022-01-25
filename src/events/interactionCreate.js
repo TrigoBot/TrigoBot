@@ -1,4 +1,4 @@
-const generateQueueEmbed = require('../ExFunctions/generateQueueEmbed');
+const DB = require('../models/suggestSchema');
 
 module.exports = {
     name: 'interactionCreate',
@@ -22,7 +22,18 @@ module.exports = {
                 });
             }
         } else if (interaction.isButton()) {
-            return
+            const button = client.buttons.get(interaction.customId);
+            if (!button) return await interaction.reply({ content: `There was no button code found for this button. `, ephemeral: true});
+
+            try {
+                await button.execute(interaction, client);
+            } catch (error) {
+                console.log(error);
+                await interaction.reply({
+                    content: 'There was an error while executing this button.',
+                    ephemeral: true
+                });
+            }
         }
     },
 };

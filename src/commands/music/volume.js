@@ -20,9 +20,8 @@ module.exports = {
 
         if (!args) return interaction.reply({ content: `🔊 Volume at \`${queue.volume}%\``}) 
 
-        if (args > 101) return interaction.reply({ content: `Percentage must be lowed than or equal to 100`, ephemeral: true})
-        if (args < 1) return interaction.reply({ content: `Percentage must be higher than or equal to 1`, ephemeral: true})
-
+        if (args.value > 101) return interaction.reply({ content: `Percentage must be lowed than or equal to 100`, ephemeral: true})
+        if (args.value < 1) return interaction.reply({ content: `Percentage must be higher than or equal to 1`, ephemeral: true})
 
         await interaction.reply(`🔊 Changed volume from \`${queue.volume}%\` to \`${args.value}%\``);
         
