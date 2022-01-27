@@ -3,8 +3,6 @@ const { MessageEmbed, CommandInteraction, Permissions} = require('discord.js');
 const ms = require("ms");
 
 module.exports = {
-
-	
 	data: new SlashCommandBuilder()
 		.setName('giveaway')
 		.setDescription('Give something away')
@@ -36,14 +34,9 @@ module.exports = {
                         .addChoice('delete', 'delete'))
                     .addStringOption(option => option.setName('message-id').setDescription('Provide the id of the giveaway message')
                     .setRequired(true))
-        )
-        
-        
+        ) 
         ,
-
-
     permissions: [ Permissions.FLAGS.ADMINISTRATOR], 
-
     /**
      * 
      * @param {CommandInteraction} interaction 
@@ -56,15 +49,12 @@ execute(interaction, client) {
        const { options } = interaction;
        const Sub = options.getSubcommand();
 
-
-
        //embeds
        const errorEmbed = new MessageEmbed()
             .setColor("RED");
 
        const  sucessEmbed = new MessageEmbed()
             .setColor("GREEN");
-
 
         switch(Sub) {
             case "start" : {
@@ -161,7 +151,6 @@ execute(interaction, client) {
                         });
                     }
                     break;
-
                 }
             }
             break;
@@ -170,6 +159,4 @@ execute(interaction, client) {
             }
         }
     },
-
-
 };

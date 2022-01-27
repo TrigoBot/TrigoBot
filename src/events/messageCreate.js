@@ -1,11 +1,33 @@
 const { MessageEmbed } = require('discord.js')
 const guildSchema = require('../models/guildSchema');
+const ticketSchema = require('../models/ticketSchema');
 
 module.exports = {
     name: 'messageCreate',
     once: false,
     async execute(message, client) {
         if (!message.guild) return;
+
+        let guildProfile = await guildSchema.findOne({ GuildID: message.guild.id })
+        if (!guildProfile) {
+            guildProfile = await new guildSchema({
+                GuildID: message.guild.id
+            });
+            await guildProfile.save().catch(err => console.log(err));
+        }
+
+        let ticketProfile = await ticketSchema.findOne({ GuildID: message.guild.id, ChannelID: message.channel.id })
+        if (ticketProfile) {
+            if (guildProfile.TEnabled == "true") {
+                const msg = { content: message.content, created_at: message.createdAt }
+
+                const logsArray = ticketProfile.Logs; 
+                logsArray.push(msg)
+
+                await ticketSchema.findOneAndUpdate({ GuildID: message.guild.id, ChannelID: message.channel.id }, { Logs: logsArray });
+            }
+        }
+        
         if (message.author.bot) return
 
         const user = await client.levels.fetch(message.author.id, message.guild.id)
@@ -27,12 +49,6 @@ module.exports = {
             sendEmbed.react('🥳')
         }
 
-        let guildProfile = await guildSchema.findOne({ guildID: message.guild.id })
-        if (!guildProfile) {
-            guildProfile = await new guildSchema({
-                guildID: message.guild.id
-            });
-            await guildProfile.save().catch(err => console.log(err));
-        }
+
     },
 };
