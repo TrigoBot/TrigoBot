@@ -7,6 +7,7 @@ module.exports = model("guilds", new Schema({
     TRole: {type: String},
     TNumber: {type: Number},
     TLog: {type: Boolean, default: false},
+    NRole: {type: String},
     RankCard: {
         InnerRing: {type: String, default: ""},
         OuterRing: {type: String, default: ""},
