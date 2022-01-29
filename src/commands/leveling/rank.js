@@ -14,21 +14,24 @@ module.exports = {
 	async execute(interaction, client) {
 		const Target= interaction.options.getUser('target');
 		let guildProfile = await guildSchema.findOne({ guildID: interaction.guild.id })
+
 		if (!Target) {
-			const user = await client.levels.fetch(interaction.user.id, interaction.guild.id)
+			let user = await client.levels.fetch(interaction.user.id, interaction.guild.id)
 			if (!user) {
 				await client.levels.createUser(interaction.user.id, interaction.guild.id);
 				let user = await client.levels.fetch(interaction.user.id, interaction.guild.id)
 
 				const rank = new cavacord.Rank()
 					.setAvatar (interaction.user.displayAvatarURL({ format: "jpg" }))
-					.setCurrentXP (user.level)
+					.setCurrentXP (user.xp)
 					.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
 					.setProgressBar(guildProfile.RankCard.ProgressBar)
 					.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
 					.setUsername (interaction.user.username)
 					.setDiscriminator (interaction.user.discriminator)
-	
+					.setLevel (user.level)
+					.setRank (1, 'RANK', false)
+
 					rank.build()
 						.then(data => {
 							const attachment = new MessageAttachment(data, "RankCard.png");
@@ -37,12 +40,14 @@ module.exports = {
 			} else {
 				const rank = new cavacord.Rank()
 					.setAvatar (interaction.user.displayAvatarURL({ format: "jpg" }))
-					.setCurrentXP (user.level)
+					.setCurrentXP (user.xp)
 					.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
 					.setProgressBar(guildProfile.RankCard.ProgressBar)
 					.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
 					.setUsername (interaction.user.username)
 					.setDiscriminator (interaction.user.discriminator)
+					.setLevel (user.level)
+					.setRank (1, 'RANK', false)
 	
 					rank.build()
 						.then(data => {
@@ -58,12 +63,14 @@ module.exports = {
 
 				const rank = new cavacord.Rank()
 					.setAvatar (Target.displayAvatarURL({ format: "jpg" }))
-					.setCurrentXP (user.level)
+					.setCurrentXP (user.xp)
 					.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
 					.setProgressBar(guildProfile.RankCard.ProgressBar)
 					.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
 					.setUsername (Target.username)
 					.setDiscriminator (Target.discriminator)
+					.setLevel (user.level)
+					.setRank (1, 'RANK', false)
 	
 				rank.build()
 					.then(data => {
@@ -73,12 +80,14 @@ module.exports = {
 			} else {
 				const rank = new cavacord.Rank()
 				.setAvatar (Target.displayAvatarURL({ format: "jpg" }))
-				.setCurrentXP (user.level)
+				.setCurrentXP (user.xp)
 				.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
 				.setProgressBar(guildProfile.RankCard.ProgressBar)
 				.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
 				.setUsername (Target.username)
 				.setDiscriminator (Target.discriminator)
+				.setLevel (user.level)
+				.setRank (1, 'RANK', false)
 
 				rank.build()
 					.then(data => {
