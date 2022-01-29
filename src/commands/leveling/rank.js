@@ -16,24 +16,43 @@ module.exports = {
 		let guildProfile = await guildSchema.findOne({ guildID: interaction.guild.id })
 		if (!Target) {
 			const user = await client.levels.fetch(interaction.user.id, interaction.guild.id)
-			const rank = new cavacord.Rank()
-				.setAvatar (interaction.user.displayAvatarURL({ format: "jpg" }))
-				.setCurrentXP (user.level)
-				.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
-				.setProgressBar(guildProfile.RankCard.ProgressBar)
-				.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
-				.setUsername (interaction.user.username)
-				.setDiscriminator (interaction.user.discriminator)
+			if (!user) {
+				await client.levels.createUser(interaction.user.id, interaction.guild.id);
+				let user = await client.levels.fetch(interaction.user.id, interaction.guild.id)
 
-				rank.build()
-					.then(data => {
-						const attachment = new MessageAttachment(data, "RankCard.png");
-						interaction.reply({ files: [attachment] });
-					})
+				const rank = new cavacord.Rank()
+					.setAvatar (interaction.user.displayAvatarURL({ format: "jpg" }))
+					.setCurrentXP (user.level)
+					.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
+					.setProgressBar(guildProfile.RankCard.ProgressBar)
+					.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
+					.setUsername (interaction.user.username)
+					.setDiscriminator (interaction.user.discriminator)
+	
+					rank.build()
+						.then(data => {
+							const attachment = new MessageAttachment(data, "RankCard.png");
+							interaction.reply({ files: [attachment] });
+						})
+			} else {
+				const rank = new cavacord.Rank()
+					.setAvatar (interaction.user.displayAvatarURL({ format: "jpg" }))
+					.setCurrentXP (user.level)
+					.setRequiredXP (client.levels.xpFor(parseInt(user.level) +1))
+					.setProgressBar(guildProfile.RankCard.ProgressBar)
+					.setBackground(guildProfile.RankCard.BackgroundType, guildProfile.RankCard.BackgroundData)
+					.setUsername (interaction.user.username)
+					.setDiscriminator (interaction.user.discriminator)
+	
+					rank.build()
+						.then(data => {
+							const attachment = new MessageAttachment(data, "RankCard.png");
+							interaction.reply({ files: [attachment] });
+						})
+			}
 		} else {
 			let user = await client.levels.fetch(Target.id, interaction.guild.id)
 			if (!user) {
-				console.log(Target.id)
 				await client.levels.createUser(Target.id, interaction.guild.id);
 				let user = await client.levels.fetch(Target.id, interaction.guild.id)
 
