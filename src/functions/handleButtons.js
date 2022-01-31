@@ -8,6 +8,7 @@ module.exports = (client) => {
             for (const file of buttonFiles) {
                 const button = require(`../buttons/${folder}/${file}`);
                 client.buttons.set(button.data.name, button);
+                console.log(`Loaded button: ${button.data.name}`)
             }
         }
     }

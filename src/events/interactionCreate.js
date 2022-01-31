@@ -23,7 +23,7 @@ module.exports = {
             }
         } else if (interaction.isButton()) {
             const button = client.buttons.get(interaction.customId);
-            if (!button) return await interaction.reply({ content: `There was no button code found for this button. `, ephemeral: true});
+            if (!button) return await interaction.reply({ content: `There was no code found for this button. `, ephemeral: true});
 
             try {
                 await button.execute(interaction, client);
@@ -34,6 +34,19 @@ module.exports = {
                     ephemeral: true
                 });
             }
-        }
+        } else if (interaction.isSelectMenu()) {
+            const menu = client.menus.get(interaction.customId);
+            if (!menu) return await interaction.reply({ content: `There was no code found for this menu. `, ephemeral: true});
+
+            try {
+                await menu.execute(interaction, client);
+            } catch (error) {
+                console.log(error);
+                await interaction.reply({
+                    content: 'There was an error while executing this menu.',
+                    ephemeral: true
+                });
+            }
+        } 
     },
 };

@@ -25,6 +25,7 @@ client.levels = Levels
 
 client.commands = new Collection();
 client.buttons = new Collection();
+client.menus = new Collection();
 
 require("./systems/GiveawaySys")(client);
 
@@ -40,6 +41,7 @@ const commandFolders = fs.readdirSync("./src/commands");
     console.log('\x1b[35m%s\x1b[0m', 'Loaded events')
     client.handleCommands(commandFolders, "./src/commands")
     client.handleButtons();
+    client.handleMenus();
     client.handleMusic(client)
     console.log('\x1b[35m%s\x1b[0m', 'Loaded Distube')
     client.login(process.env.TOKEN);
